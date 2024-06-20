@@ -26,6 +26,10 @@ const Home = () => {
 
   const handleSearch = (val: string) => {
     setSearchStr(val);
+
+    if (searchStr.length > 0) {
+      debounceSearch(searchStr);
+    }
   };
 
   const handleCancel = () => {
@@ -46,14 +50,16 @@ const Home = () => {
       return <NoData style={styles.noDataContainer} />;
     }
 
-    return <PlacesList data={places} />;
+    return (
+      <PlacesList
+        data={places}
+        onItemPress={(val) => {
+          setSearchStr(val);
+          dispatch(clearPlaces());
+        }}
+      />
+    );
   };
-
-  useEffect(() => {
-    if (searchStr.length > 0) {
-      debounceSearch(searchStr);
-    }
-  }, [searchStr]);
 
   return (
     <View>
