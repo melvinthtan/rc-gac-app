@@ -27,8 +27,11 @@ const Home = () => {
   const handleSearch = (val: string) => {
     setSearchStr(val);
 
-    if (searchStr.length > 0) {
-      debounceSearch(searchStr);
+    if (val.length > 0) {
+      debounceSearch(val);
+    } else {
+      dispatch(clearPlaces());
+      debounceSearch.cancel();
     }
   };
 
